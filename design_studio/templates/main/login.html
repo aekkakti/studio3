@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+{% load bootstrap4 %}
+
+
+{% block title %} Вход <br></br> {% endblock %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<p>Вы уже выполнили вход.</p>
+{% else %}
+<form method="post">
+   {% csrf_token %}
+   {% bootstrap_form form layout='horizontal' %}
+   <input type="hidden" name="next" value="{{ next }}">
+   {% buttons submit='Войти' %} {% endbuttons %}
+</form>
+{% endif %}
+{% endblock %}

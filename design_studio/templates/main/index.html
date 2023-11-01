@@ -1,5 +1,16 @@
-{% extends "layout/basic.html" %}
+{% load static %}
 
-{% block content %}
-  <h2>Последние 10 объявлений</h2>
-{% endblock %}
+
+<header>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</header>
+<body>
+    <ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="#">Главная</a>
+            <a class="dropdown-item" href="{% url 'design_studio:registration' %}">Регистрация</a>
+            <a class="dropdown-item" href="{% url 'design_studio:login' %}">Авторизация</a>
+        </ul>
+    </ul>
+<h2>Добро пожаловать на сайт! </h2>
+</body>
