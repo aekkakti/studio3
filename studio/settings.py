@@ -129,3 +129,4 @@ AUTH_USER_MODEL = 'design_studio.AdvUser'
 
 from django.core.management.commands.runserver import Command
 Command.default_port = "8080"
+Command.default_addr = "localhost"
