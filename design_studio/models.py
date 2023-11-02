@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from datetime import datetime
+from django.core.exceptions import ValidationError
 
 
 class MainConfig(AppConfig):
@@ -21,6 +22,11 @@ class Meta(AbstractUser.Meta):
 
 
 class Request(models.Model):
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        max_size = 2.0
+        if filesize > max_size * 1024 * 1024:
+            raise ValidationError("Максимальный размер файла 2 МБ")
     request_name = models.CharField(max_length=254, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
     REQUEST_CATEGORY = (
@@ -35,7 +41,7 @@ class Request(models.Model):
         default='a',
         verbose_name="Категория")
     photo_of_room = models.ImageField(max_length=254, upload_to="media/", verbose_name="Фотография", help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
-                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])])
+                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
     date_create = models.DateField(default=datetime.now(), verbose_name="Дата создания")
     time_create = models.TimeField(default=datetime.now(), verbose_name="Время создания")
     REQUEST_STATUS = (
@@ -47,7 +53,6 @@ class Request(models.Model):
         default='Новая',
         blank=True,
         verbose_name="Статус")
-
 
     def __str__(self):
         return self.request_name
