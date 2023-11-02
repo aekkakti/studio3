@@ -1,16 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views.generic.list import ListView
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from .forms import UserRegisterForm
 from .models import Request
-
-
-def index(request):
-   return render(request, 'main/index.html')
+from django.utils import timezone
 
 class BBLoginView(LoginView):
    template_name = 'main/login.html'
@@ -40,7 +37,9 @@ class CreateRequest(CreateView):
    template_name = 'main/create.html'
    success_url = reverse_lazy('main:index')
 
-class ViewRequests(generic.ListView):
+class ViewRequests(ListView):
    model = Request
+   template_name = 'main/index.html'
+   context_object_name = 'requests'
 
 
