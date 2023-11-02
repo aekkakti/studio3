@@ -21,7 +21,7 @@
         <p> <b>Название: </b>{{ request.request_name }} </p>
         <p> <b>Категория: </b>{{request.category}} </p>
         <p> <b>Описание: </b> {{ request.description }} </p>
-        <p> <b>Фотография: </b> <img src="{{request.photo_of_room.url}}"/> </p>
+        <p> <b>Фотография: </b> <img src="{{request.photo_of_room.url}}" width="250px" height="150px"/> </p>
         <p> <b>Время создания: </b>  {{request.date_create}} -- {{request.time_create}}</p>
         <br><br><br>
     {% endfor %}
