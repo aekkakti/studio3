@@ -9,6 +9,9 @@ from .forms import UserRegisterForm
 from .models import Request
 from django.utils import timezone
 
+def index(request):
+   return render(request, 'main/index.html')
+
 class BBLoginView(LoginView):
    template_name = 'main/login.html'
 

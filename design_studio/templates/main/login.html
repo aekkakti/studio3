@@ -1,15 +1,30 @@
-
 {% load bootstrap4 %}
-
-
-{% block title %} Вход <br></br> {% endblock %}
-
+{% load static %}
+<header>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</header>
 
 {% block content %}
-
 {% if user.is_authenticated %}
-<p>Вы уже выполнили вход.</p>
+
+<ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+            <a class="dropdown-item" href="{% url 'registration' %}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'login' %}">Выход</a>
+        </ul>
+    </ul>
+<h2>Вы уже выполнили вход.</h2>
+
 {% else %}
+<ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+            <a class="dropdown-item" href="{% url 'registration' %}">Регистрация</a>
+            <a class="dropdown-item" href="{% url 'login' %}">Авторизация</a>
+        </ul>
+    </ul>
+<h2>Авторизация</h2>
 <form method="post">
    {% csrf_token %}
    {% bootstrap_form form layout='horizontal' %}
