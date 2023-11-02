@@ -45,4 +45,9 @@ class ViewRequests(ListView):
    template_name = 'main/index.html'
    context_object_name = 'requests'
 
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["num_of_accepted_requests"] = Request.objects.filter(status__exact='process').count
+      return context
+
 

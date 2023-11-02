@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from datetime import datetime
 from django.core.exceptions import ValidationError
+import django
 
 
 class MainConfig(AppConfig):
@@ -29,30 +30,29 @@ class Request(models.Model):
             raise ValidationError("Максимальный размер файла 2 МБ")
     request_name = models.CharField(max_length=254, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
+    REQUEST_STATUS = (
+        ('new', 'Новая'),
+        ('process', 'Принято в работу'),
+        ('maked', 'Выполнено'),
+    )
+    status = models.CharField(
+        max_length=25,
+        choices=REQUEST_STATUS,
+        blank=True,
+        verbose_name="Статус заявки")
     REQUEST_CATEGORY = (
-        ('House', 'House'),
-        ('Plane', 'Plane'),
-        ('BigBen', 'BigBen'),
+        ('BigBen', 'Здание'),
+        ('Plane', 'Самолёт'),
+        ('House', 'Дом'),
     )
     category = models.CharField(
         max_length=10,
         choices=REQUEST_CATEGORY,
         blank=True,
-        default='a',
         verbose_name="Категория")
     photo_of_room = models.ImageField(max_length=254, upload_to="media/", verbose_name="Фотография", help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                                       validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
-    date_create = models.DateField(default=datetime.now(), verbose_name="Дата создания")
-    time_create = models.TimeField(default=datetime.now(), verbose_name="Время создания")
-    REQUEST_STATUS = (
-        ('Новая', 'Новая'),
-    )
-    status = models.CharField(
-        max_length=6,
-        choices=REQUEST_STATUS,
-        default='Новая',
-        blank=True,
-        verbose_name="Статус")
+    date = models.DateTimeField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.request_name

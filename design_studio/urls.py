@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
-      path('superadmin/', admin.site.urls),
       path('', ViewRequests.as_view(), name='index'),
       path('register/', RegistrateUser.as_view(), name='registration'),
       path('login/', BBLoginView.as_view(), name='login'),
