@@ -8,7 +8,7 @@
     <ul class="dropdown-menu">
         <ul class="sidebar-nav">
             <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
-            <a class="dropdown-item" href="#">Профиль</a>
+            <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
             <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
         </ul>
     </ul>
@@ -22,6 +22,7 @@
     </ul>
 {% endif %}
 <h2>Добро пожаловать на сайт! </h2>
+ <p> Количество заявок, принятых в работу: <b>{{num_of_accepted_requests }}</b> </p>
 <ul>
 {%block content%}
 <br>
@@ -35,7 +36,6 @@
         <p> <b>Время создания: </b>  {{request.date}}</p>
         <br><br><br>
     {% endfor %}
-    <p> Количество заявок, принятых в работу: <b>{{num_of_accepted_requests }}</b> </p>
 {% else %}
     <p>No requests</p>
 {% endif %}

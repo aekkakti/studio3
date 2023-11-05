@@ -1,7 +1,7 @@
 import re
 from django.core.exceptions import ValidationError
-
-from .models import AdvUser
+from .models import AdvUser, Request
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -23,5 +23,11 @@ class UserRegisterForm(UserCreationForm):
         if AdvUser.objects.filter(username=username).exists():
             raise ValidationError("Пользователь с таким логином уже существует. ")
         return username
+
+class CreateRequestForm(ModelForm):
+    class Meta:
+        model = Request
+        fields = ('request_name', 'description', 'category', 'photo_of_room')
+
 
 
