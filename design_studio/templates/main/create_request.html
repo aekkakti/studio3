@@ -17,7 +17,7 @@
         {% csrf_token %}
             <h1>Создание новой заявки</h1>
         {{ form.as_p }}
-        {% buttons submit='Создать опрос' %} {% endbuttons %}
+        {% buttons submit='Создать заявку' %} {% endbuttons %}
 {% else %}
   <p>Здравствуйте! Вы не авторизовались в систему </p>
     <ul class="dropdown-menu">
