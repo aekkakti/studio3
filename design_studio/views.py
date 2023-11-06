@@ -54,6 +54,11 @@ class DeleteRequest(DeleteView):
     template_name = 'main/delete_request.html'
     success_url = reverse_lazy('index')
 
+class DeleteRequestFilter(DeleteView):
+    model = Request
+    template_name = 'main/delete_request.html'
+    success_url = reverse_lazy('index')
+
 class ViewProcessRequests(ListView):
     model = Request
     template_name = 'main/index.html'
