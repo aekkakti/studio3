@@ -25,20 +25,13 @@
 
 # Запуск
 
-1. Выполните миграции базы данных:
-
-```bash
-    python manage.py makemigrations
-    python manage.py migrate
-```
-
-2. Запустите сервер:
+1. Запустите сервер:
 
 ```bash
     python manage.py runserver
 ```
 
-3. Вход в панель администратора осуществлять по адресу:
+2. Вход в панель администратора осуществлять по адресу:
 
 ```bash
     http://localhost:8080/superadmin/
