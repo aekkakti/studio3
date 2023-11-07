@@ -1,0 +1,24 @@
+{% load static %}
+<header>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</header>
+{% if user.is_staff %}
+<ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+            <a class="dropdown-item" href="{% url 'admin_requests' %}">Админка</a>
+            <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
+        </ul>
+    </ul>
+<a href="{% url 'create_category' %}">Создать категорию</a>
+    <h2>Все категории:</h2>
+    {% for category in categories %}
+        <p> <b>Категория: </b>{{category.name}} </p>
+        <a href="{% url 'delete_category' category.id %}">Удалить категорию</a>
+        <br><br><br>
+    {% endfor %}
+{% else %}
+<a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+<h2>У вас недостаточно прав для посещения это страницы!</h2>
+{% endif %}

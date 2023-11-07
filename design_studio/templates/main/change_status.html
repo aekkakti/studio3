@@ -1,0 +1,31 @@
+{% block title %}
+
+<title>Обновление заявки</title>
+
+{% endblock %}
+{% block content %}
+
+{% if requests.status == 'd' or requests.status == 'a' %}
+
+<h3>Вы не можете обновить данную заявку, так как она Принята в работу или Выполнена</h3>
+<a href="{% url 'index' %}">Главная</a>
+
+{% else %}
+
+<h1>Обновление статуса заявки</h1>
+<a href="{% url 'index' %}">Главная</a>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+     <img src="{{requests.photo_of_room.url}}"  width="250px" height="150px">
+    <br><br>
+
+    <input type="submit" value="Обновить заявку">
+
+</form>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% block title %}
+<a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+<title>Создание новой категории</title>
+
+{% endblock %}
+{% block content %}
+<h1>Создание категории</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input type="submit" value="Создать категорию">
+
+</form>
+
+{% endblock %}

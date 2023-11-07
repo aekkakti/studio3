@@ -1,11 +1,11 @@
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
-from django.views.generic import CreateView, DeleteView
+from django.views.generic import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
-from .forms import UserRegisterForm
-from .models import Request
+from .forms import UserRegisterForm, CategoryCreateForm, RequestUpdateStatusForm
+from .models import Request, Category
 from django.contrib.auth.decorators import login_required
 from .forms import CreateRequestForm
 from django.shortcuts import render
@@ -90,4 +90,38 @@ class RequestListView(ListView):
         if status:
             return Request.objects.filter(status=status)
         return Request.objects.all()
+
+class ViewAllRequests(ListView):
+    model = Request
+    template_name = 'main/admin_request_list.html'
+    context_object_name = 'requests'
+
+class ChangeStatusRequest(UpdateView):
+    model = Request
+    fields = ['status']
+    template_name = 'main/change_status.html'
+    context_object_name = 'requests'
+    success_url = reverse_lazy('admin_requests')
+
+class ViewCategory(ListView):
+    model = Category
+    template_name = 'main/category.html'
+    context_object_name = 'categories'
+class CreateCategory(CreateView):
+    model = Category
+    form_class = CategoryCreateForm
+    template_name = 'main/create_category.html'
+    success_url = reverse_lazy('admin_requests')
+
+class DeleteCategory(DeleteView):
+    model = Category
+    template_name = 'main/delete_category.html'
+    success_url = reverse_lazy('admin_requests')
+
+class UpdateRequestView(UpdateView):
+    permission_required = 'is_staff'
+    template_name = 'main/update_request.html'
+    model = Request
+    form_class = RequestUpdateStatusForm
+    success_url = reverse_lazy('admin_requests')
 

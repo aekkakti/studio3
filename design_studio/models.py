@@ -34,26 +34,17 @@ class Request(models.Model):
     request_name = models.CharField(max_length=254, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
     REQUEST_STATUS = (
-        ('Новая', 'Новая'),
-        ('Принято в работу', 'Принято в работу'),
-        ('Выполнено', 'Выполнено'),
+        ('n', 'Новая'),
+        ('a', 'Принято в работу'),
+        ('d', 'Выполнено'),
     )
     status = models.CharField(
         max_length=25,
         choices=REQUEST_STATUS,
         blank=True,
-        default='Новая',
+        default='n',
         verbose_name="Статус заявки")
-    REQUEST_CATEGORY = (
-        ('BigBen', 'Здание'),
-        ('Plane', 'Самолёт'),
-        ('House', 'Дом'),
-    )
-    category = models.CharField(
-        max_length=10,
-        choices=REQUEST_CATEGORY,
-        blank=True,
-        verbose_name="Категория")
+    category = models.ForeignKey('category', on_delete=models.CASCADE, blank=True, verbose_name="Категория")
     photo_of_room = models.ImageField(max_length=254, upload_to="media/", verbose_name="Фотография",
                                       help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                                       validators=[
@@ -62,6 +53,9 @@ class Request(models.Model):
     date = models.DateTimeField(default=django.utils.timezone.now)
 
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE)
+    new_design = models.ImageField(upload_to='media/', validators=[FileExtensionValidator(allowed_extensions=['jpeg', 'jpg', 'png', 'bmp']),
+                                          validate_image], blank=True)
+    comment = models.TextField(blank=True)
 
 
     class Meta:
@@ -70,4 +64,8 @@ class Request(models.Model):
     def __str__(self):
         return self.request_name
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name

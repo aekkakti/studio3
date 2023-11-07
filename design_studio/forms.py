@@ -1,8 +1,8 @@
 import re
-from django.core.exceptions import ValidationError
-from .models import AdvUser, Request
+from .models import *
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 
 class UserRegisterForm(UserCreationForm):
@@ -28,6 +28,34 @@ class CreateRequestForm(ModelForm):
     class Meta:
         model = Request
         fields = ('request_name', 'description', 'category', 'photo_of_room')
+
+class CategoryCreateForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name',)
+
+
+class RequestUpdateStatusForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ('status', 'comment', 'new_design')
+
+    def clean(self):
+        super().clean()
+        status = self.cleaned_data.get('status')
+        new_design = self.cleaned_data.get('new_design')
+        comment = self.cleaned_data.get('comment')
+
+        if status == 'd' and not new_design:
+            raise ValidationError('Меняя статус заявки на "Выполнено", прикрепите изображение')
+        elif status == 'd' and comment:
+            raise ValidationError('Указывая статус "Выполнено", вы не должны указывать комментарий')
+
+        if status == 'a' and not comment:
+            raise ValidationError('Меняя статус заявки на "Принято в работу", укажите комментарий')
+        elif status == 'a' and new_design:
+            raise ValidationError(
+                'Меняя статус заявки на "Принято в работу, вы не можете прикрепить изображение')
 
 
 

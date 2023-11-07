@@ -1,4 +1,7 @@
-
+{% load static %}
+<header>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</header>
 {% if request.status == 'Новая' %}
 <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
 <h1>Вы уверены, что хотите удалить {{ object }}?</h1>

@@ -4,7 +4,17 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </header>
 <body>
-{% if user.is_authenticated %}
+
+{% if user.is_staff %}
+<ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+            <a class="dropdown-item" href="{% url 'admin_requests' %}">Админка</a>
+            <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
+        </ul>
+    </ul>
+{% elif user.is_authenticated == True and user.is_staff == False %}
     <ul class="dropdown-menu">
         <ul class="sidebar-nav">
             <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
@@ -13,7 +23,8 @@
         </ul>
     </ul>
 {% else %}
-<ul class="dropdown-menu">
+  <p>Здравствуйте! Вы не авторизовались в систему </p>
+    <ul class="dropdown-menu">
         <ul class="sidebar-nav">
             <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
             <a class="dropdown-item" href="{% url 'registration' %}">Регистрация</a>
@@ -23,7 +34,7 @@
 {% endif %}
 <h2>Добро пожаловать на сайт! </h2>
  <p> Количество заявок, принятых в работу: <b>{{num_of_accepted_requests }}</b> </p>
-<ul>
+
 {%block content%}
 <br>
 <h2>Все заявки: </h2>
@@ -39,6 +50,7 @@
 {% else %}
     <p>No requests</p>
 {% endif %}
-{%endblock content%}
-</ul>
-</body>
+{% endblock content %}
+
+
+
