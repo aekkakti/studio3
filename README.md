@@ -5,7 +5,7 @@
 1. Клонируйте репозиторий:
 
 ```bash
-   git clone https://github.com/aekkakti/studio2.git
+   git clone https://github.com/aekkakti/studio3.git
 
 ```
 
