@@ -1,10 +1,33 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<header>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</header>
+
 {% if user.is_staff %}
+<ul class="dropdown-menu">
+        <ul class="sidebar-nav">
+            <a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+            <a class="dropdown-item" href="{% url 'admin_requests' %}">Админка</a>
+            <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
+        </ul>
+    </ul>
+    <a href="{% url 'view_category' %}">Редактирование категорий</a>
+    <h2>Все заявки пользователей:</h2>
     {% for request in requests %}
         <p> <b>Название: </b>{{ request.request_name }} </p>
         <p> <b>Категория: </b>{{request.category}} </p>
         <p> <b>Описание: </b> {{ request.description }} </p>
         <p> <b>Фотография: </b> <img src="{{request.photo_of_room.url}}" width="250px" height="150px"/> </p>
         <p> <b>Время создания: </b>  {{request.date}}</p>
+        <p> <b> Заявку создал: </b> {{request.author}}</p>
+        <a href="{% url 'change_status_request' request.id %}">Изменить статус</a><br><br>
+        <a href="{% url 'request_update' request.id %}">Обновить заявку</a>
         <br><br><br>
     {% endfor %}
+{% else %}
+<a class="dropdown-item" href="{% url 'index' %}">Главная</a>
+<h2>У вас недостаточно прав для посещения это страницы!</h2>
 {% endif %}
